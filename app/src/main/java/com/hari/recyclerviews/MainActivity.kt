@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
         linearLayoutManager = LinearLayoutManager(this)
 
 
+        list.add(RecyclerViewBean("Item Data", 1))
         list.add(RecyclerViewBean("Item Data"))
         list.add(RecyclerViewBean("Item Data"))
         list.add(RecyclerViewBean("Item Data"))
@@ -31,6 +32,29 @@ class MainActivity : AppCompatActivity() {
         list.add(RecyclerViewBean("Item Data"))
         list.add(RecyclerViewBean("Item Data"))
         list.add(RecyclerViewBean("Item Data"))
+        list.add(RecyclerViewBean("Item Data"))
+        list.add(RecyclerViewBean("Item Data"))
+        list.add(RecyclerViewBean("Item Data"))
+        list.add(RecyclerViewBean("Item Data"))
+        list.add(RecyclerViewBean("Item Data", 1))
+        list.add(RecyclerViewBean("Item Data"))
+        list.add(RecyclerViewBean("Item Data"))
+        list.add(RecyclerViewBean("Item Data"))
+        list.add(RecyclerViewBean("Item Data"))
+        list.add(RecyclerViewBean("Item Data"))
+        list.add(RecyclerViewBean("Item Data"))
+        list.add(RecyclerViewBean("Item Data"))
+        list.add(RecyclerViewBean("Item Data"))
+        list.add(RecyclerViewBean("Item Data"))
+        list.add(RecyclerViewBean("Item Data"))
+        list.add(RecyclerViewBean("Item Data"))
+        list.add(RecyclerViewBean("Item Data"))
+        list.add(RecyclerViewBean("Item Data"))
+        list.add(RecyclerViewBean("Item Data"))
+        list.add(RecyclerViewBean("Item Data"))
+        list.add(RecyclerViewBean("Item Data"))
+
+
 
 
 
@@ -41,6 +65,7 @@ class MainActivity : AppCompatActivity() {
             layoutManager = linearLayoutManager
             adapter = recyclerViewAdapter
             itemAnimator = animator
+            addItemDecoration(StickyHeaderDecoration(this, adapter as StickyHeaderDecoration.StickyHeaderInterface))
         }
     }
 
@@ -61,3 +86,6 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 }
+
+
+//https://proandroiddev.com/enter-animation-using-recyclerview-and-layoutanimation-part-1-list-75a874a5d213
