@@ -3,37 +3,61 @@ package com.hari.recyclerviews
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.recycler_item.view.*
+import com.hari.recyclerviews.databinding.HeaderItemBinding
+import com.hari.recyclerviews.databinding.RecyclerItemBinding
+import kotlinx.android.synthetic.main.header_item.view.*
 
-class RecyclerViewAdapter (private val myList : ArrayList<RecyclerViewBean>) : RecyclerView.Adapter <RecyclerViewAdapter.RcViewHolder>(), StickyHeaderDecoration.StickyHeaderInterface{
+class RecyclerViewAdapter : ListAdapter<RecyclerViewBean, RecyclerView.ViewHolder>(RecyclerBeanDiffCallBack()),
+    StickyHeaderDecoration.StickyHeaderInterface {
 
-    class RcViewHolder (itemView : View) : RecyclerView.ViewHolder(itemView)
+    private class RcViewHolder(private val itemBinding: RecyclerItemBinding) :
+        RecyclerView.ViewHolder(itemBinding.root) {
+        fun bind(bean: RecyclerViewBean) {
+            itemBinding.item = bean
+//            itemBinding.executePendingBindings()
+        }
+    }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RcViewHolder {
-        var view : View = LayoutInflater.from(parent.context).inflate(R.layout.recycler_item, parent, false)
-        when (viewType){
+    class RcHeaderViewHolder(private val headerItemBinding: HeaderItemBinding) :
+        RecyclerView.ViewHolder(headerItemBinding.root) {
+        fun bind(bean: RecyclerViewBean) {
+            headerItemBinding.headerItem = bean
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+
+        return when (viewType) {
             1 -> {
-                view = LayoutInflater.from(parent.context).inflate(R.layout.header_item, parent, false)
+                val binding = HeaderItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                RcHeaderViewHolder(binding)
+            }
+            else -> {
+                val binding = RecyclerItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                RcViewHolder(binding)
             }
         }
 
-        return RcViewHolder(view)
+
     }
 
     override fun getItemViewType(position: Int): Int {
-        return myList[position].type
-    }
-    override fun onBindViewHolder(holder: RcViewHolder, position: Int) {
-        when (holder.itemViewType){
-            0 -> {
-                holder.itemView.txtItem.text = myList[position].itemName
-            }
-        }
+        return getItem(position).type
     }
 
-    override fun getItemCount(): Int {
-        return myList.size
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (holder.itemViewType) {
+            0 -> {
+                (holder as RcViewHolder).bind(getItem(position))
+            }
+
+            1 -> {
+                (holder as RcHeaderViewHolder).bind(getItem(position))
+            }
+        }
     }
 
     override fun getHeaderPositionForItem(itemPosition: Int): Int {
@@ -54,10 +78,10 @@ class RecyclerViewAdapter (private val myList : ArrayList<RecyclerViewBean>) : R
     }
 
     override fun bindHeaderData(header: View, headerPosition: Int) {
-
+        header.headerText.text = getItem(headerPosition).itemName
     }
 
     override fun isHeader(itemPosition: Int): Boolean {
-        return myList[itemPosition].type == 1
+        return getItem(itemPosition).type == 1
     }
 }

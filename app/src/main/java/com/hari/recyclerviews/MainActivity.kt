@@ -23,7 +23,12 @@ class MainActivity : AppCompatActivity() {
         linearLayoutManager = LinearLayoutManager(this)
 
 
-        list.add(RecyclerViewBean("Item Data", 1))
+        list.add(RecyclerViewBean("Header1", 1))
+        list.add(RecyclerViewBean("Item Data"))
+        list.add(RecyclerViewBean("Item Data"))
+        list.add(RecyclerViewBean("Item Data 1"))
+        list.add(RecyclerViewBean("Item Data 2"))
+        list.add(RecyclerViewBean("Item Data 3"))
         list.add(RecyclerViewBean("Item Data"))
         list.add(RecyclerViewBean("Item Data"))
         list.add(RecyclerViewBean("Item Data"))
@@ -31,12 +36,7 @@ class MainActivity : AppCompatActivity() {
         list.add(RecyclerViewBean("Item Data"))
         list.add(RecyclerViewBean("Item Data"))
         list.add(RecyclerViewBean("Item Data"))
-        list.add(RecyclerViewBean("Item Data"))
-        list.add(RecyclerViewBean("Item Data"))
-        list.add(RecyclerViewBean("Item Data"))
-        list.add(RecyclerViewBean("Item Data"))
-        list.add(RecyclerViewBean("Item Data"))
-        list.add(RecyclerViewBean("Item Data", 1))
+        list.add(RecyclerViewBean("Header2", 1))
         list.add(RecyclerViewBean("Item Data"))
         list.add(RecyclerViewBean("Item Data"))
         list.add(RecyclerViewBean("Item Data"))
@@ -60,14 +60,16 @@ class MainActivity : AppCompatActivity() {
 
 
         animator.addDuration = 500
-        recyclerViewAdapter = RecyclerViewAdapter(list)
+        recyclerViewAdapter = RecyclerViewAdapter()
         recyclerView = findViewById<RecyclerView>(R.id.recyclerView).apply {
             layoutManager = linearLayoutManager
             adapter = recyclerViewAdapter
             itemAnimator = animator
             addItemDecoration(StickyHeaderDecoration(this, adapter as StickyHeaderDecoration.StickyHeaderInterface))
         }
+        recyclerViewAdapter.submitList(list)
     }
+
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
